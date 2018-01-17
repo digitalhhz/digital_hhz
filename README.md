@@ -1,4 +1,4 @@
-# HHZ_IoT
+# Digital HHZ
 
 Digital HHZ is a project of students at the Herman-Hollerith-Zentrum in Böblingen. It revolves around the digital transformation of research and studies at HHZ.
 
