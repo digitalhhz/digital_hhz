@@ -37,9 +37,9 @@ class TransferData:
 
 class GMailSender:
     def __init__(self):
-        self.user = "[REPL_EMAIL ADDRESS]"
-        self.pw = "[REPL_PASSWORD]"
-        self.recipients = ["[REPL_RECIPIENT1]", "[REPL_RECIPIENT2]", "[REPL_RECIPIENT3]", "[REPL_ETC ...]"]
+        self.user = "[REPLACE WITH MAILADDRESS]"
+        self.pw = "[REPLACE WITH PASSWORD]"
+        self.recipients = ["[REPLACE WITH RECIPIENT1]", "[REPLACE WITH RECIPIENT2]"]
     
     def sendGMail(self, email):
         server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
@@ -49,32 +49,58 @@ class GMailSender:
 
 
 try:
-    print("START: Regular backup, upload and cleaning of the Home Assistant DB")
+    pathToLog = "/home/homeassistant/.homeassistant/scripts/backupHADB.log"
 
-    # Stop the Home Assistant service
-    print("1. Stopping the Home Assistant service")
-    #cmdStopHA = "sudo systemctl stop home-assistant@homeassistant.service"
-    #os.system(cmdStopHA)
-    print("Successfully stopped the Home Assistant service")
-
-    # Create a timestamp and include it into the backup's name
+    # Create a timestamp
     now = datetime.datetime.now()
     timestamp = now.strftime("%d%m%Y-%H%M%S")
+     
+    print("backupHADB.py called on: " + datetime.datetime.now().strftime("%d.%m.%Y %H:%M:%S"))
+    cmdWriteToLog = "echo " + "backupHADB.py called on: " + datetime.datetime.now().strftime("%d.%m.%Y %H:%M:%S") + " >> " + pathToLog
+    os.system(cmdWriteToLog)
+   
+    # Start the script run 
+    print(datetime.datetime.now().strftime("%H:%M:%S") + " - " + "START: Regular backup, upload and cleaning of the Home Assistant DB")
+    cmdWriteToLog = "echo " + datetime.datetime.now().strftime("%H:%M:%S") + " - " + "START: Regular backup, upload and cleaning of the Home Assistant DB" + " >> " + pathToLog
+    os.system(cmdWriteToLog)
+
+    # 1. Stop the Home Assistant service
+    print(datetime.datetime.now().strftime("%H:%M:%S") + " - " + "1. Stopping the Home Assistant service")
+    cmdWriteToLog = "echo " + datetime.datetime.now().strftime("%H:%M:%S") + " - " + "1. Stopping the Home Assistant service" + "  >> " +  pathToLog
+    os.system(cmdWriteToLog)
+
+    cmdStopHA = "sudo systemctl stop home-assistant@homeassistant.service"
+    os.system(cmdStopHA)
+
+    print(datetime.datetime.now().strftime("%H:%M:%S") + " - " + "Successfully stopped the Home Assistant service")
+    cmdWriteToLog = "echo " + datetime.datetime.now().strftime("%H:%M:%S") + " - " + "Successfully stopped the Home Assistant service" + " >> " + pathToLog
+    os.system(cmdWriteToLog)
+
+    # Define the backup output name
     backupName = timestamp + "_" + "HA_DB_BACKUP.tar.gz"
+    fullBackupPath  = "/home/homeassistant/.homeassistant/" + backupName
 
-    # Create a Home Assistant database backup (.tar.gz)
-    print("2. Creating the Home Assistant DB backup")
-    cmdBackup = "tar -zcvf " + backupName + " home-assistant_v2.db"
+    # 2. Create a Home Assistant database backup (.tar.gz)
+    print(datetime.datetime.now().strftime("%H:%M:%S") + " - " + "2. Creating the Home Assistant DB backup")
+    cmdWriteToLog = "echo " + datetime.datetime.now().strftime("%H:%M:%S") + " - " + "2. Creating the Home Assistant DB backup" + " >> " + pathToLog
+    os.system(cmdWriteToLog)    
+
+    cmdBackup = "tar -zcvf " + fullBackupPath + " /home/homeassistant/.homeassistant/home-assistant_v2.db"
     os.system(cmdBackup)
-    print("Successfully created the Home Assistant DB backup")
 
-    # Upload the Home Assistant database backup to Dropbox
-    print("3. Uploading the Home Assistant DB backup to Dropbox")
+    print(datetime.datetime.now().strftime("%H:%M:%S") + " - " + "Successfully created the Home Assistant DB backup")
+    cmdWriteToLog = "echo " + datetime.datetime.now().strftime("%H:%M:%S") + " - " + "Successfully created the Home Assistant DB backup" + " >> " + pathToLog
+    os.system(cmdWriteToLog)
 
-    access_token = '[REPL_TOKEN]'
+    # 3.  Upload the Home Assistant database backup to Dropbox
+    print(datetime.datetime.now().strftime("%H:%M:%S") + " - " + "3. Uploading the Home Assistant DB backup to Dropbox")
+    cmdWriteToLog = "echo " + datetime.datetime.now().strftime("%H:%M:%S") + " - " + "3. Uploading the Home Assistant DB backup to Dropbox" + " >> " + pathToLog    
+    os.system(cmdWriteToLog)
+
+    access_token = '[REPLACE WITH ACCESS TOKEN]'
     transferData = TransferData(access_token)
 
-    file_from = backupName
+    file_from = fullBackupPath
     file_to = '/DB_Backups/' + backupName  # The full path to upload the file to, including the file name
 
     file_size = os.path.getsize(file_from)
@@ -85,39 +111,70 @@ try:
     else:
         transferData.upload_large_file(file_from, file_to, file_size, chunk_size)
 
-    print ("Successfully uploaded the Home Assistant DB backup to Dropbox")
+    print(datetime.datetime.now().strftime("%H:%M:%S") + " - " + "Successfully uploaded the Home Assistant DB backup to Dropbox")
+    cmdWriteToLog = "echo " + datetime.datetime.now().strftime("%H:%M:%S") + " - " + "Successfully uploaded the Home Assistant DB backup to Dropbox" + " >> " + pathToLog
+    os.system(cmdWriteToLog)    
 
-    # Delete all (!) records from the original Home Assistant database and optimize its space consumption
-    print("4. Deleting all records from the original Home Assistant DB and optimizing its space consumption")
-    connection = sqlite3.connect("home-assistant_v2.db")
+    # 4. Delete all (!) records from the original Home Assistant database and optimize its space consumption
+    print(datetime.datetime.now().strftime("%H:%M:%S") + " - " + "4. Deleting all records from the original Home Assistant DB and optimizing its space consumption")
+    cmdWriteToLog = "echo " + datetime.datetime.now().strftime("%H:%M:%S") + " - " + "4. Deleting all records from the original Home Assistant DB and optimizing its space consumption" + " >> " + pathToLog
+    os.system(cmdWriteToLog)
+   
+    connection = sqlite3.connect("/home/homeassistant/.homeassistant/home-assistant_v2.db")
     cursor = connection.cursor()
     cursor.execute("""DELETE FROM states;""")
     connection.commit()
-    print("Successfully deleted all records from the Home Assistant DB")
+
+    print(datetime.datetime.now().strftime("%H:%M:%S") + " - " + "Successfully deleted all records from the Home Assistant DB")
+    cmdWriteToLog = "echo " + datetime.datetime.now().strftime("%H:%M:%S") + " - " + "Successfully deleted all records from the Home Assistant DB" + " >> " + pathToLog
+    os.system(cmdWriteToLog)
+
     cursor.execute("""VACUUM;""")
     connection.commit()
-    print("Successfully optimized the space consumption of the Home Assistant DB")
-    connection.close()
-    print("Successfully finished all database operations")
+    print(datetime.datetime.now().strftime("%H:%M:%S") + " - " + "Successfully optimized the space consumption of the Home Assistant DB")
+    cmdWriteToLog = "echo " + datetime.datetime.now().strftime("%H:%M:%S") + " - " + "Successfully optimized the space consumption of the Home Assistant DB" + " >> " + pathToLog
+    os.system(cmdWriteToLog)
 
-    # Start the Home Assistant service
-    print("5. Starting the Home Assistant service")
-    #cmdStartHA = "sudo systemctl start home-assistant@homeassistant.service"
-    #os.system(cmdStartHA)
-    print("Successfully started the Home Assistant service")
-    
-    # Send an email signalling successful completion of upload
-    print("6. Sending email notification")
+    connection.close()
+
+    print(datetime.datetime.now().strftime("%H:%M:%S") + " - " + "Successfully finished all database operations")
+    cmdWriteToLog = "echo " + datetime.datetime.now().strftime("%H:%M:%S") + " - " + "Successfully finished all database operations" + " >> " + pathToLog
+    os.system(cmdWriteToLog)
+
+    # 5. Start the Home Assistant service
+    print(datetime.datetime.now().strftime("%H:%M:%S") + " - " + "5. Starting the Home Assistant service")
+    cmdWriteToLog = "echo " + datetime.datetime.now().strftime("%H:%M:%S") + " - " + "5. Starting the Home Assistant service" + " >> " + pathToLog
+    os.system(cmdWriteToLog)
+
+    cmdStartHA = "sudo systemctl start home-assistant@homeassistant.service"
+    os.system(cmdStartHA)
+
+    print(datetime.datetime.now().strftime("%H:%M:%S") + " - " + "Successfully started the Home Assistant service")
+    cmdWriteToLog = "echo " + datetime.datetime.now().strftime("%H:%M:%S") + " - " + "Successfully started the Home Assistant service" + " >> " + pathToLog
+    os.system(cmdWriteToLog)
+ 
+    # 6. Send an email signalling successful completion of upload
+    print(datetime.datetime.now().strftime("%H:%M:%S") + " - " + "6. Sending email notification")
+    cmdWriteToLog = "echo " + datetime.datetime.now().strftime("%H:%M:%S") + " - " + "6. Sending email notification" + " >> " + pathToLog
+    os.system(cmdWriteToLog)
+
     gMailSender = GMailSender()
     subject = "Home Assistant DB Backup Successful"
     text = "Hallo,\n\ndas Backup der Home Assistant Datenbank ist erfolgreich durchgelaufen. Sie finden das aktuelle Backup unter: https://www.dropbox.com/sh/iq57xdtff0tv20a/AABvsOUZXgAhzKisoGFB0BLaa?dl=0.\n\n- Das Digital HHZ Team"
     gMailSender.sendGMail('Subject: {}\n\n{}'.format(subject, text))
-    print("Successfully sent email notification.")
 
-    print("END: Successfully finished the regular backup, upload and cleaning of the Home Assistant DB")
+    print(datetime.datetime.now().strftime("%H:%M:%S") + " - " + "Successfully sent email notification.")
+    cmdWriteToLog = "echo " + datetime.datetime.now().strftime("%H:%M:%S") + " - " + "Successfully sent email notification" + " >> " + pathToLog
+    os.system(cmdWriteToLog)
+
+    print(datetime.datetime.now().strftime("%H:%M:%S") + " - " + "END: Successfully finished the regular backup, upload and cleaning of the Home Assistant DB")
+    cmdWriteToLog = "echo " + datetime.datetime.now().strftime("%H:%M:%S") + " - " + "END: Successfully finished the regular backup, upload and cleaning of the Home Assistant DB" + " >> " + pathToLog
+    os.system(cmdWriteToLog)
 
 except Exception as e:
-    print("An error occurred: "+e)
+    print(datetime.datetime.now().strftime("%H:%M:%S") + " - " + "An error occurred: "+e)
+    cmdWriteToLog = "echo " + datetime.datetime.now().strftime("%H:%M:%S") + " - " + "An error occurred: " + e
+    os.system(cmdWriteToLog) 
     gMailSender = GMailSender()
     subject = "Home Assistant DB Backup Failed"
     text = "Hallo,\n\ndas Backup der Home Assistant Datenbank ist fehlgeschlagen.\nDas Skript hat folgenden Fehler geworfen: "+e+"\n\n- Das Digital HHZ Team"
