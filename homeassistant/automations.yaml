@@ -1,0 +1,87 @@
+# Start timer when lecture has been started
+- id: stopwatchstart
+  alias: Stopwatch start
+  trigger:
+    platform: state
+    entity_id: input_boolean.stopwatch
+    to: 'on'
+  action:
+    - service: input_boolean.toggle
+      entity_id: input_boolean.timerdummy
+
+# Stop timer when lecture has been stopped
+- id: stopwatchstop 
+  alias: Stopwatch stop
+  trigger:
+    platform: state
+    entity_id: input_boolean.stopwatch
+    to: 'off'
+  action:
+    - service: input_boolean.toggle
+      entity_id: input_boolean.timerdummy
+
+# Update timer every minute
+- id: stopwatchupdate         
+  alias: Stopwatch update
+  trigger:
+    platform: time
+    minutes: '/1'
+  condition:
+    condition: state
+    entity_id: input_boolean.stopwatch
+    state: 'on'
+  action:
+    service: input_boolean.toggle
+    entity_id: input_boolean.timerdummy
+
+# Restart Home Assistant when lecture stops to reset the break request count
+- id: lecturestop
+  alias: Restart HA when Lecture stops
+  trigger:
+    platform: state
+    entity_id: input_boolean.stopwatch
+    to: "off"
+  action:
+    service: homeassistant.restart
+
+# Send a notification to the Home Assistant Dashboard when break score reaches threshhold    
+- id: sendbreaknotification
+  alias: Send break notification based on score
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.breakscore
+      above: 100
+    - platform: numeric_state
+      entity_id: sensor.breakscore
+      above: 150
+  action:
+    service: persistent_notification.create
+    data:
+      title: "Notification"
+      message: "Time for a break!"
+
+# Send a notification to the Home Assistant Dashboard when CO2 value reaches threshhold  
+- id: sendco2notification
+  alias: Send notification to open window based on CO2 in PPM
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.hhz_eg125_airquality_a_9_1
+    above: 900
+  action:
+    service: persistent_notification.create
+    data:
+      title: "Notification"
+      message: "CO2 level is too high. Please open the window!"
+
+# Send a notification to the Home Assistant Dashboard when lux value reaches threshhold 
+- id: sendluxnotification
+  alias: Send notification to turn on the lights based on brightness in lux
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.hhz_eg125_light_b_10_0
+    below: 200
+  action:
+    service: persistent_notification.create
+    data:
+      title: "Notification"
+      message: "It is too dark. Please turn on the lights!"

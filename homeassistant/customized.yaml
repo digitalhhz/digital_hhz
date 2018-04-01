@@ -1,0 +1,125 @@
+### Weather ###
+
+sensor.weather_apparent_temperature:
+  friendly_name: 'Gefühlte Temperatur'
+sensor.weather_cloud_coverage:
+  friendly_name: 'Wolkensituation'
+sensor.weather_humidity:
+  friendly_name: 'Luftfeuchtigkeit'
+sensor.weather_pressure:
+  friendly_name: 'Luftdruck'
+sensor.weather_temperature:
+  friendly_name: 'Temperatur'
+sensor.weather_icon:
+  friendly_name: 'Icon'
+sensor.weather_wind_speed:
+  friendly_name: 'Windgeschwindigkeit'
+
+
+### MySensors ###
+
+# Raum 125 #
+sensor.125_temp_a:
+  friendly_name: 'Temperatur - A'
+  icon: mdi:thermometer
+sensor.125_temp_b:
+  friendly_name: 'Temperatur - B'
+  icon: mdi:thermometer
+sensor.125_hum_a:
+  friendly_name: 'Luftfeuchtigkeit - A'
+  icon: mdi:water-percent
+sensor.125_hum_b:
+  friendly_name: 'Luftfeuchtigkeit - B'
+  icon: mdi:water-percent
+sensor.125_light_a:
+  friendly_name: 'Helligkeit - A'
+  icon: mdi:lightbulb-outline
+sensor.125_light_b:
+  friendly_name: 'Helligkeit - B'
+  icon: mdi:lightbulb-outline
+sensor.125_co2_a:
+  friendly_name: 'Co2 Gehalt - A'
+  icon: mdi:periodic-table-co2
+sensor.125_motion_a:
+  friendly_name: 'Bewegung - Dozententisch'
+  icon: mdi:human-handsup
+sensor.125_motion_b:
+  friendly_name: 'Bewegung - Tür'
+  icon: mdi:human-handsup
+sensor.125_motion_c:
+  friendly_name: 'Bewegung - Posterbereich'
+  icon: mdi:human-handsup
+sensor.125_motion_d:
+  friendly_name: 'Bewegung - Waschbecken'
+  icon: mdi:human-handsup
+
+# Raum 120 #
+sensor.120_temp_a:
+  friendly_name: 'Temperatur - A'
+  icon: mdi:thermometer
+sensor.120_temp_b:
+  friendly_name: 'Temperatur - B'
+  icon: mdi:thermometer
+sensor.120_hum_a:
+  friendly_name: 'Luftfeuchtigkeit - A'
+  icon: mdi:water-percent
+sensor.120_hum_b:
+  friendly_name: 'Luftfeuchtigkeit - B'
+  icon: mdi:water-percent
+sensor.120_co2_a:
+  friendly_name: 'Co2 Gehalt - A'
+  icon: mdi:periodic-table-co2
+sensor.120_light_a:
+  friendly_name: 'Helligkeit - A'
+  icon: mdi:lightbulb-outline
+sensor.120_light_b:
+  friendly_name: 'Helligkeit - B'
+  icon: mdi:lightbulb-outline
+sensor.120_motion_a:
+  friendly_name: 'Bewegung - Tür'
+  icon: mdi:human-handsup
+sensor.120_motion_b:
+  friendly_name: 'Bewegung - Sitzecke (1)'
+  icon: mdi:human-handsup
+sensor.120_motion_c:
+  friendly_name: 'Bewegung - Sitzecke (2)'
+  icon: mdi:human-handsup
+sensor.120_motion_d:
+  friendly_name: 'Bewegung - Management-Server'
+  icon: mdi:human-handsup
+
+# Raum 126_2 #
+sensor.126_2_hum_a:
+  friendly_name: 'Luftfeuchtigkeit - A'
+  icon: mdi:water-percent
+sensor.126_2_temp_a:
+  friendly_name: 'Temperatur - A'
+  icon: mdi:thermometer
+sensor.126_2_light_a:
+  friendly_name: 'Helligkeit - A'
+  icon: mdi:lightbulb-outline
+sensor.126_2_co2_a:
+  friendly_name: 'Co2 Gehalt (Raum 126/2)'
+  unit_of_measurment: "ppm"
+  icon: mdi:periodic-table-co2
+sensor.126_2_motion_a:
+  friendly_name: 'Bewegung - Tür'
+  icon: mdi:human-handsup
+sensor.126_2_motion_b:
+  friendly_name: 'Bewegung - Kaffeemaschine'
+  icon: mdi:human-handsup
+
+### System Monitor ###
+
+sensor.cpu_use:
+  friendly_name: 'Auslastung CPU'
+sensor.disk_use_:
+  friendly_name: 'Auslastung Festplattenspeicher'
+sensor.disk_free_:
+  friendly_name: 'Freier Festplattenspeicher'
+sensor.ram_use:
+  friendly_name: 'Auslastung Arbeitsspeicher'
+sensor.ram_free:
+  friendly_name: 'Freier Arbeitsspeicher'
+sensor.since_last_boot:
+  friendly_name: 'Systemlaufzeit seit letztem Start'

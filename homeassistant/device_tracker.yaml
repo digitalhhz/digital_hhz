@@ -1,0 +1,4 @@
+# MySensosors Gateways
+- platform: ping
+  hosts:
+    MySensors125: 192.168.0.182
