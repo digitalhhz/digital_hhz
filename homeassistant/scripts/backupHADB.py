@@ -49,7 +49,7 @@ class GMailSender:
 
 
 try:
-    pathToLog = "/home/homeassistant/.homeassistant/scripts/backupHADB.log"
+    pathToLog = "/home/homeassistant/.homeassistant/scripts/backupHADB/backupHADB.log"
 
     # Create a timestamp
     now = datetime.datetime.now()
