@@ -1,6 +1,6 @@
-# Digital HHZ
+ # Digital HHZ
 
-Digital HHZ is a one-year student project that was conducted at the Herman Hollerith Zentrum (HHZ) in Böblingen, Germany. The overall project goal was to advance Digitalization in research and teaching as well as to benefit from its advantages. Short description watch this: https://youtu.be/J6Np9_-ZzRM.
+Digital HHZ is a one-year student project that was conducted at the Herman Hollerith Zentrum (HHZ) in Böblingen, Germany. The overall project goal was to advance Digitalization in research and teaching as well as to benefit from its advantages. Short description watch this:[![Video_DHHZ](https://github.com/digitalhhz/digital_hhz/blob/master/Documentation/Pictures/Home/Screenshot_Video.PNG)](https://youtu.be/J6Np9_-ZzRM "Digital HHZ") .
 
 ![Problem](https://github.com/digitalhhz/digital_hhz/blob/master/Documentation/Pictures/Home/Problem.png)
 
