@@ -1,0 +1,62 @@
+{
+    "05057e7c": {
+        "eep": "d5-00-01",
+        "id": "05057e7c",
+        "title": "window1",
+        "desc": "No desc",
+        "type": "window",
+        "last": [
+            {
+                "type": "unknown",
+                "unit": "unknown",
+                "value": "closed",
+                "lastModified": "2017-12-12T16:42:35.243Z"
+            }
+        ]
+    },
+    "05057e7e": {
+        "eep": "d5-00-01",
+        "id": "05057e7e",
+        "title": "window2",
+        "desc": "No desc",
+        "type": "window",
+        "last": [
+            {
+                "type": "unknown",
+                "unit": "unknown",
+                "value": "closed",
+                "lastModified": "2017-12-12T16:54:10.561Z"
+            }
+        ]
+    },
+    "05057e72": {
+        "eep": "d5-00-01",
+        "id": "05057e72",
+        "title": "door",
+        "desc": "No desc",
+        "type": "door",
+        "last": [
+            {
+                "type": "unknown",
+                "unit": "unknown",
+                "value": "closed",
+                "lastModified": "2018-04-13T09:22:35.882Z"
+            }
+        ]
+    },
+    "018a2dc6": {
+        "eep": "a5-02-05",
+        "id": "018a2dc6",
+        "title": "temperature",
+        "desc": "No desc",
+        "type": "temperature",
+        "last": [
+            {
+                "type": "unknown",
+                "unit": "unknown",
+                "value": 16.784313725490197,
+                "lastModified": "2017-12-12T17:00:19.478Z"
+            }
+        ]
+    }
+}
