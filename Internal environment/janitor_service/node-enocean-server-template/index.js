@@ -20,12 +20,11 @@ enocean.emitters.push(io)
 
 enocean.on('known-data', d => {
 	io.sockets.emit(d.sensor.title, d);
-	client.publish('hhz/125/' + d.sensor.type + '/' + d.sensor.title, d.values[0].value);
-
+	
 	if(d.values[0].value == "closed") {
 		client.publish('hhz/125/' + d.sensor.type + '/' + d.sensor.title, "geschlossen");		
 	} else if(d.values[0].value == "open") {
-		client.publish('hhz/125/' + d.sensor.type + '/' + d.sensor.title, "ge√ffnet");			
+		client.publish('hhz/125/' + d.sensor.type + '/' + d.sensor.title, "ge√∂ffnet");			
 	} else {
 		client.publish('hhz/125/' + d.sensor.type + '/' + d.sensor.title, d.values[0].value);
 	}
