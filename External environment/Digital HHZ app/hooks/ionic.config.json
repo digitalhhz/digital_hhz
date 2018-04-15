@@ -1,0 +1,8 @@
+{
+  "name": "TabsAndMenu",
+  "app_id": "",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
